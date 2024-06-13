@@ -1,0 +1,17 @@
+# Define services for deploying and running rknn service.
+version: "3.9"
+services:
+  git_script:
+    image: git_script:0.1              # Docker image for service
+    container_name: git_script         # Container name
+    privileged: true                # Extended privileges for this container
+    build:                          # Build an image from a Dockerfile
+      context: .                    # Path of the Dockerfile (current directory)
+      shm_size: "200mb"               # More memory usage for build container
+    volumes:                        # File system mounts for containers
+      - .:/workspaces:cached        # mount code folder
+    restart: "no"                   # No auto-restart on failure for more availability
+    stdin_open: true                # Keep STDIN open even if not attached
+    tty: true                       # Allocate a pseudo-TTY
+    network_mode: "host"            # For LLM
+      
